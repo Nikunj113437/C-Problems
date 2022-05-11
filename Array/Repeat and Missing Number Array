@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+vector<int> Solution::repeatedNumber(const vector<int> &A) {
+    int X,Y;
+    //X is repeated element 
+    //Y is missing element
+    int n=A.size();
+    int S=n*(n+1)/2;
+    int P=n*(n+1)*(2*n+1)/6;
+    int So=A[0];
+    int Po=pow(A[0],2);
+    for(int i=1;i<n;i++){
+        So+=A[i];
+        Po+=pow(A[i],2);
+    }
+    int k=abs(S-So);
+    int l=abs(P-Po);
+    vector<int> v;
+    X=(pow(k,2)+l)/(2*k);
+    Y=(l-pow(k,2))/(2*k);
+    v.push_back(Y);
+    v.push_back(X);
+    return v;
+}
