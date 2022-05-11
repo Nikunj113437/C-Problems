@@ -1,0 +1,50 @@
+class Solution {
+public:
+    int merge(vector<int>& nums,int si,int mid,int ei){
+        int count=0;
+        int i=si;
+        int j=mid+1;
+        for(i=si;i<=mid;i++){
+            while(j<=ei && nums[i]>(long long)2*nums[j]){
+                j++;
+            }
+            count+=j-(mid+1);
+        }
+        i=si;
+        j=mid+1;
+        vector<int> temp;
+        while(i<=mid && j<=ei){
+            if(nums[i]<=nums[j]){
+                temp.push_back(nums[i++]);
+            }
+            else if(nums[i]>nums[j]){
+                temp.push_back(nums[j++]);
+            }
+        }
+        while(i<=mid){
+            temp.push_back(nums[i++]);
+        }
+        while(j<=ei){
+            temp.push_back(nums[j++]);
+        }
+        int k=0;
+        for(int i=si;i<=ei;i++){
+            nums[i]=temp[k++];
+        }
+        return count;
+    }
+    
+    int helper(vector<int>& nums,int si,int ei){
+        if(si>=ei)   return 0;
+        int mid=(si+ei)/2;
+        int x=helper(nums,si,mid);
+        int y=helper(nums,mid+1,ei);
+        int z=merge(nums,si,mid,ei);
+        return (x+y+z);
+    }
+    
+    int reversePairs(vector<int>& nums) {
+        int n=nums.size();
+        return helper(nums,0,n-1);
+    }
+};
