@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+bool compare(pair<int,pair<int,int>> a,pair<int,pair<int,int>> b){
+	return a.second.second>b.second.second;
+}
+
+int jobScheduling(vector<vector<int>> &jobs)
+{
+    // Write your code here
+	vector<pair<int,pair<int,int>>> v;
+	int n=jobs.size();
+	for(int i=0;i<n;i++){
+		v.push_back(make_pair(i+1,make_pair(jobs[i][0],jobs[i][1])));
+	}
+	sort(v.begin(),v.end(),compare);
+	int maxDeadline=INT_MIN;
+	for(int i=0;i<n;i++){
+		if(jobs[i][0]>maxDeadline)   maxDeadline=jobs[i][0];
+	}
+	int profit=0;  
+	int* temp=new int[maxDeadline];
+	for(int i=0;i<maxDeadline;i++){
+		temp[i]=-1;
+	}
+	for(int i=0;i<n;i++){
+		int j=v[i].second.first-1;
+		while(j>=0){
+			if(temp[j]==-1){
+				temp[j]=v[i].first;
+				profit+=v[i].second.second;
+				break;
+			}
+			else j--;
+		}
+	}
+	return profit;
+}
+
+
+
+
+
+
