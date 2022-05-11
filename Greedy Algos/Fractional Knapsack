@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+bool compare(pair<pair<int,double>,pair<double,double>> a,
+			 pair<pair<int,double>,pair<double,double>> b){
+	return a.second.second>b.second.second;
+}
+
+double maximumValue (vector<pair<int, int>>& items, int n, int w)
+{
+    // Write your code here.
+    // ITEMS contains {weight, value} pairs.
+	vector<pair<pair<int,double>,pair<double,double>>> v;
+	for(int i=0;i<n;i++){
+		double temp=(double)items[i].second/(double)items[i].first;
+		v.push_back(make_pair(make_pair(i+1,items[i].first),
+				make_pair(items[i].second,temp)));
+	}
+	sort(v.begin(),v.end(),compare);
+	double profit=0;
+	for(int i=0;i<n;i++){
+		if(w>=v[i].first.second){
+			w=w-v[i].first.second;
+			profit+=v[i].second.first;
+		}
+		else{
+			double temp=(w/v[i].first.second)*v[i].second.first;
+			profit+=temp;
+			break;
+		}
+	}
+	return profit;
+}
