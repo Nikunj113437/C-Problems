@@ -1,0 +1,66 @@
+class Solution {
+public:
+    //1. Recursion
+//     int uniquePathHelper(int m,int n,int i,int j){
+//         // i and j represent current position of robot
+//         //initially start from (0,0)
+        
+//         if(i==m-1 && j==n-1)    return 1;
+//         int x=0,y=0;
+//         if(i<m)      x=uniquePathHelper(m,n,i+1,j);
+//         if(j<n)      y=uniquePathHelper(m,n,i,j+1);
+//         return x+y;
+//     }
+    
+//     int uniquePaths(int m, int n) {
+//         return uniquePathHelper(m,n,0,0);
+//     }
+    
+  //2.Memoization
+    
+//     int uniquePathHelper(int** visited,int m,int n,int i,int j){
+//         // i and j represent current position of robot
+//         //initially start from (0,0)
+        
+//         if(i>=m || j>=n)   return 0;
+//         if(i==m-1 && j==n-1)    return 1;
+//         if(visited[i][j]!=0)   return visited[i][j];
+        
+//         int x=uniquePathHelper(visited,m,n,i+1,j);
+//         int y=uniquePathHelper(visited,m,n,i,j+1);
+//         visited[i][j]=x+y;
+//         return visited[i][j];
+//     }
+    
+//     int uniquePaths(int m, int n) {
+//         int **visited=new int*[m];
+//         for(int i=0;i<m;i++){
+//             visited[i]=new int[n];
+//             for(int j=0;j<n;j++){
+//                 visited[i][j]=0;
+//             }
+//         }
+//         return uniquePathHelper(visited,m,n,0,0);
+//     }
+    // DP
+    int uniquePaths(int m, int n) {
+        int** dp=new int*[m];
+        for(int i=0;i<m;i++){
+            dp[i]=new int[n];
+            for(int j=0;j<n;j++){
+                dp[i][j]=0;
+            }
+        }
+        for(int i=m-1;i>=0;i--){
+            for(int j=n-1;j>=0;j--){
+                if(i==m-1 || j==n-1){
+                    dp[i][j]=1;
+                }
+                else {
+                    dp[i][j]=dp[i][j+1]+dp[i+1][j];
+                }
+            }
+        }
+        return dp[0][0];
+    }
+};
