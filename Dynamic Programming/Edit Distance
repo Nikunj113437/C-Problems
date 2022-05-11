@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+class Solution {
+public:
+    // int minDistanceMemoization(string s1,string s2,int** &ans){
+    //     int l1=s1.size();
+    //     int l2=s2.size();
+    //     if(l1==0 && l2==0)   return 0;
+    //     if(l1==0 && l2!=0)   return l2;
+    //     if(l1!=0 && l2==0)   return l1;
+    //     if(ans[l1][l2]!=-1)  return ans[l1][l2];
+    //     if(s1[0]==s2[0]){
+    //   ans[l1[l2]=minDistanceMemoization(s1.substr(1),s2.substr(1),ans);
+    //     }
+    //     else{
+    //         int x=minDistance(s1.substr(1),s2);         //insert a char
+    //         int y=minDistance(s1,s2.substr(1));         //delete a char
+    //         int z=minDistance(s1.substr(1),s2.substr(1)); //update char
+    //         ans[l1][l2]=1+min(x,min(y,z));    
+    //     }
+    //     return ans[l1][l2];
+    // }
+    
+    int minDistance(string s1, string s2) {
+        //Recursion
+        
+        // if(s1.size()==0 && s2.size()==0)   return 0;
+        // if(s1.size()==0 && s2.size()!=0)   return s2.size();
+        // if(s1.size()!=0 && s2.size()==0)   return s1.size();
+        // if(s1[0]==s2[0]){
+        //     return minDistance(s1.substr(1),s2.substr(1));
+        // }
+        // else{
+        //    int x=minDistance(s1.substr(1),s2);         //insert a char
+        //    int y=minDistance(s1,s2.substr(1));         //delete a char
+        //    int z=minDistance(s1.substr(1),s2.substr(1)); //update achar
+        //    return 1+min(x,min(y,z));
+        // }
+    
+        //Memoization
+        
+        // int l1=s1.size();
+        // int l2=s2.size();
+        // int** ans=new int*[l1+1];
+        // for(int i=0;i<=l1;i++){
+        //     ans[i]=new int[l2+1];
+        //     for(int j=0;j<=l2;j++){
+        //         ans[i][j]=-1;
+        //     }
+        // }
+        // return minDistanceMemoization(s1,s2,ans);
+        
+        //DP
+        int l1=s1.size();
+        int l2=s2.size();
+        int ** ans=new int*[l1+1];
+        for(int i=0;i<=l1;i++){
+            ans[i]=new int[l2+1];
+            for(int j=0;j<=l2;j++){
+                if(i==0)   ans[i][j]=j;
+                else if(j==0)   ans[i][j]=i;
+                else if(s1[i-1]==s2[j-1]){
+                    ans[i][j]=ans[i-1][j-1];
+                }
+                else{
+                    int x=ans[i-1][j];
+                    int y=ans[i][j-1];
+                    int z=ans[i-1][j-1];
+                    ans[i][j]=1+min(x,min(y,z));
+                }
+            }
+        }
+        return ans[l1][l2];
+    }
+};
+
+
+
+
+
+
