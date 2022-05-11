@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+int matrixMultiplication(vector<int> &arr, int x)
+{
+    // Write your code here.
+	int n=x-1;       //n represent no. Of Matrices
+	                 //x represent size of order array
+	int** output=new int*[n+1];
+	for(int i=0;i<=n;i++){
+		output[i]=new int[n+1];
+		for(int j=0;j<=n;j++){
+			if(i==0 || j==0)   output[i][j]=0;
+			else if(i==j)  output[i][j]=0;
+		}
+	}
+	int i=1;
+	int m=1;
+	while(m<n){
+		int j=i+m;
+		while(j<=n){
+			int k=i;
+			int minAns=INT_MAX;
+			while(k>=i && k<j){
+				int temp=output[i][k]+output[k+1][j]+(arr[i-1]*arr[k]* arr[j]);
+				minAns=min(minAns,temp);
+				k++;
+			}
+			output[i][j]=minAns;
+			i++;
+			j++;
+		}
+		i=1;
+		m++;
+	}
+	return output[1][n];
+}
