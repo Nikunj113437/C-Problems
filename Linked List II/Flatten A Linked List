@@ -1,0 +1,117 @@
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+class Node {
+public:
+	int data;
+	Node* next;
+	Node* child;
+
+	Node(int data) {
+		this->data = data;
+		this->next = NULL;
+		this->child = NULL;
+	}
+};
+
+*****************************************************************/
+#include<bits/stdc++.h>
+// Node* mergeLL(Node* head1,Node* head2){
+// 	if(head1==NULL)   return head2;
+// 	if(head2==NULL)    return head1;
+// 	Node* temp1=head1;
+// 	Node* temp2=head2;
+// 	Node* finalLL=new Node(0);
+// 	Node* output=finalLL;
+// 	while(temp1!=NULL && temp2!=NULL){
+// 		if(temp1->data<=temp2->data){
+// 			finalLL->child=temp1;
+// 			finalLL=finalLL->child;
+// 			temp1=temp1->child;
+// 		}
+// 		else{
+// 			finalLL->child=temp2;
+// 			finalLL=finalLL->child;
+// 			temp2=temp2->child;
+// 		}
+// 	}
+// 	while(temp1!=NULL){
+// 		finalLL->child=temp1;
+// 		finalLL=finalLL->child;
+// 		temp1=temp1->child;
+// 	}
+// 	while(temp2!=NULL){
+// 		finalLL->child=temp2;
+// 		finalLL=finalLL->child;
+// 		temp2=temp2->child;
+// 	}
+// 	return output->child;
+// }
+// Node* mergeSort(Node* head){
+// 	if(head==NULL || head->child==NULL)   return head;
+// 	Node* slow=head;
+// 	Node* fast=head->child;
+// 	while(fast!=NULL && fast->child!=NULL){
+// 		slow=slow->child;
+// 		fast=fast->child->child;
+// 	}
+// 	Node* x=slow->child;
+// 	slow->child=NULL;
+// 	Node* temp1=mergeSort(head);
+// 	Node* temp2=mergeSort(x);
+// 	return mergeLL(temp1,temp2);
+// }
+Node* flattenLinkedList(Node* head) 
+{
+// 	// Write your code here
+// 	if(head==NULL)  return head;
+// 	Node* temp1=head;
+// 	Node* temp2=head->next;
+// 	while(temp2!=NULL){
+// 		while(temp1!=NULL && temp1->child!=NULL){
+// 			temp1=temp1->child;
+// 		}
+// 		temp1->child=temp2;
+// 		temp1=temp1->child;
+// 		temp2=temp2->next;
+// 	}
+// 	Node* finalLL=mergeSort(head);
+// 	return finalLL;
+	
+	// By recursion
+	if(head==NULL)   return head;
+	Node* temp=flattenLinkedList(head->next);
+	Node* temp1=head;
+	Node* temp2=temp;
+	Node* finalLL=new Node(0);
+	Node* output=finalLL;
+	while(temp1!=NULL && temp2!=NULL){
+		if(temp1->data<=temp2->data){
+			finalLL->child=temp1;
+			finalLL=finalLL->child;
+			temp1=temp1->child;
+		}
+		else{
+			finalLL->child=temp2;
+			finalLL=finalLL->child;
+			temp2=temp2->child;
+		}
+	}
+	while(temp1!=NULL){
+		finalLL->child=temp1;
+		finalLL=finalLL->child;
+		temp1=temp1->child;
+	}
+	while(temp2!=NULL){
+		finalLL->child=temp2;
+		finalLL=finalLL->child;
+		temp2=temp2->child;
+	}
+	return output->child;
+}
+
+
+
+
+
