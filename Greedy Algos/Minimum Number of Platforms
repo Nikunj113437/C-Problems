@@ -1,0 +1,22 @@
+#include<bits/stdc++.h>
+int calculateMinPatforms(int at[], int dt[], int n) {
+    // Write your code here.
+
+	sort(at,at+n);
+	sort(dt,dt+n);
+	int platformUsed=1;
+	int maxPlatform=1;
+	int i=0,j=1;
+	while(i<n && j<n){
+		if(at[j]<=dt[i]){
+			platformUsed++;
+			j++;
+		}
+		else{
+			platformUsed--;
+			i++;
+		}
+		maxPlatform=max(maxPlatform,platformUsed);
+	}
+	return maxPlatform;
+}
